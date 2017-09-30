@@ -41,6 +41,21 @@ public class ArrayFrequencyTable extends BasicFrequencyTable
 		return table[getClassIndex( classValue )][attributeMap.get( attributeValue )];
 	}
 
+	double getProbabilty( int attributeIndex, String classValue )
+	{
+		return table[getClassIndex( classValue )][attributeIndex];
+	}
+
+	double getProbabilty( String attributeValue, int classIndex )
+	{
+		return table[classIndex][getAttributeIndex( attributeValue )];
+	}
+
+	double getProbabilty( int attributeIndex, int classIndex )
+	{
+		return table[classIndex][classIndex];
+	}
+
 	public void setProbability( String classValue, String attributeValue, int frequency )
 	{
 

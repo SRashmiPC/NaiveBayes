@@ -18,7 +18,8 @@ public abstract class BasicFrequencyTable
 
 	public BasicFrequencyTable( String className, String attributeName, String[] classValues, int attributeCardinality )
 	{
-		if(!allocated){
+		if ( !allocated )
+		{
 			BasicFrequencyTable.className = className;
 			BasicFrequencyTable.generateClassMap( classValues );
 			BasicFrequencyTable.classCardinality = classValues.length;
@@ -128,11 +129,17 @@ public abstract class BasicFrequencyTable
 
 	public int getClassIndex( String value )
 	{
-		return ( int ) classMap.get( value );
+		return ( int ) BasicFrequencyTable.classMap.get( value );
 	}
 
 	abstract int getAttributeIndex( String value );
 
 	abstract double getProbabilty( String attributeValue, String classValue );
+
+	abstract double getProbabilty( int attributeIndex, String classValue );
+
+	abstract double getProbabilty( String attributeValue, int classIndex );
+
+	abstract double getProbabilty( int attributeIndex, int classIndex );
 
 }
