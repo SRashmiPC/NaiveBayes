@@ -40,4 +40,9 @@ public class ArrayFrequencyTable extends BasicFrequencyTable
 	{
 		return table[getClassIndex( classValue )][attributeMap.get( attributeValue )];
 	}
+
+	public void setProbability( String classValue, String attributeValue, int frequency )
+	{
+
+	}
 }

@@ -13,18 +13,18 @@ import java.util.Random;
 /**
  * Created by Rashmi on 9/12/2017.
  */
-public class BasicNaiveBayes
+public class WekaNaiveBayes
 {
 	private String filePath;
 	private int classIndex;
 
-	public BasicNaiveBayes( String filePath, int classIndex )
+	public WekaNaiveBayes( String filePath, int classIndex )
 	{
 		this.filePath = filePath;
 		this.classIndex = classIndex;
 	}
 
-	public BasicNaiveBayes()
+	public WekaNaiveBayes()
 	{
 	}
 

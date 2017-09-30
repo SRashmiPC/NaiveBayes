@@ -7,7 +7,7 @@ public class Driver
 {
 	public static void main( String[] args )
 	{
-		BasicNaiveBayes basicNaiveBayes = new BasicNaiveBayes( "E:\\SampleDataset\\ionosphere.arff", 34 );
-		basicNaiveBayes.startNaiveBayes();
+		WekaNaiveBayes wekaNaiveBayes = new WekaNaiveBayes( "E:\\SampleDataset\\ionosphere.arff", 34 );
+		wekaNaiveBayes.startNaiveBayes();
 	}
 }
