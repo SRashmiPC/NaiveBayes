@@ -1,5 +1,6 @@
 package bayes.data.structures;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,6 +22,7 @@ public abstract class BasicFrequencyTable
 		if ( !allocated )
 		{
 			BasicFrequencyTable.className = className;
+			BasicFrequencyTable.classMap = new HashMap<String, Integer>(  );
 			BasicFrequencyTable.generateClassMap( classValues );
 			BasicFrequencyTable.classCardinality = classValues.length;
 			BasicFrequencyTable.classValueFrequencies = new int[classCardinality];

@@ -1,5 +1,6 @@
 package bayes.data.structures;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,6 +25,7 @@ public class ArrayFrequencyTable extends BasicFrequencyTable
 
 	public void generateMap( String[] attributeValues )
 	{
+		attributeMap = new HashMap<String, Integer>(  );
 		int len = attributeValues.length;
 		for ( int i = 0; i < len; i++ )
 		{
@@ -56,8 +58,24 @@ public class ArrayFrequencyTable extends BasicFrequencyTable
 		return table[classIndex][classIndex];
 	}
 
-	public void setProbability( String classValue, String attributeValue, int frequency )
+	public void setProbability( String classValue, String attributeValue, double probability )
 	{
+		table[super.getClassIndex( classValue )][this.getAttributeIndex( attributeValue )] = probability;
+	}
 
+	public void printTable()
+	{
+		int nClasses = table.length;
+		int nAttributes = table[0].length;
+
+		for ( int i = 0; i < nClasses; i++ )
+		{
+			for ( int j = 0; j < nAttributes; j++ )
+			{
+				System.out.print( table[i][j] + " " );
+			}
+			System.out.println( "" );
+		}
+		System.out.println("");
 	}
 }

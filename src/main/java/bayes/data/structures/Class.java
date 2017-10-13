@@ -10,8 +10,34 @@ public class Class
 	private String className;
 	private int classCardinality;
 	private Map<String, Integer> classMap;//maps classAttribute's values to indexes
-	private int[] classValueFrequencies;
+	private double[] classValueProbabilities;
 	private boolean allocated = false;
+
+	public Class( int classCardinality )
+	{
+		this.classCardinality = classCardinality;
+	}
+
+	public void init( double[] classValueFrequencies )
+	{
+		generateClassValueProb( classValueFrequencies );
+	}
+
+	public void generateClassValueProb( double[] classValueFrequencies )
+	{
+		int sum = 0;
+		for ( int i = 0; i < classCardinality; i++ )
+		{
+			sum += classValueFrequencies[i];
+		}
+
+		for ( int i = 0; i < classCardinality; i++ )
+		{
+			classValueFrequencies[i] += classValueFrequencies[i] / sum;
+		}
+
+		this.classValueProbabilities = classValueFrequencies;
+	}
 
 	public String getClassName()
 	{
@@ -43,13 +69,13 @@ public class Class
 		this.classMap = classMap;
 	}
 
-	public int[] getClassValueFrequencies()
+	public double[] getClassValueProbabilities()
 	{
-		return classValueFrequencies;
+		return classValueProbabilities;
 	}
 
-	public void setClassValueFrequencies( int[] classValueFrequencies )
+	public void setClassValueProbabilities( double[] classValueProbabilities )
 	{
-		this.classValueFrequencies = classValueFrequencies;
+		this.classValueProbabilities = classValueProbabilities;
 	}
 }
