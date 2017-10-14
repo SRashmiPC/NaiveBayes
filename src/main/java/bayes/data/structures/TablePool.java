@@ -1,5 +1,6 @@
 package bayes.data.structures;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -10,14 +11,17 @@ public class TablePool
 	/**
 	 * this class is a direct dependency of Naive Byes Algorithm
 	 */
-	Map<String, BasicFrequencyTable> attributeMap;
-	int numberOfAttributes;
-	String[] attributeList;
+	private Map<String, BasicFrequencyTable> attributeMap;
+	private int numberOfAttributes;
+	private String[] attributeList;
+	private Class classAttribute;
 
-	public TablePool( String... attributeList )
+	public TablePool( Class classAttribute, String... attributeList )
 	{
+		this.classAttribute = classAttribute;
 		this.numberOfAttributes = attributeList.length;
 		this.attributeList = attributeList;
+		this.attributeMap = new HashMap<String, BasicFrequencyTable>();
 	}
 
 	public Map<String, BasicFrequencyTable> getAttributeMap()
@@ -40,9 +44,9 @@ public class TablePool
 		this.numberOfAttributes = numberOfAttributes;
 	}
 
-	public void generateAtributeMap( String... attributeList )
+	public void add( String attributeName, BasicFrequencyTable basicFrequencyTable )
 	{
-		//TODO: generete map with relevant Frequency Tables
+		this.attributeMap.put( attributeName, basicFrequencyTable );
 	}
 
 	public BasicFrequencyTable getTable( String attribute )
@@ -77,11 +81,11 @@ public class TablePool
 
 	public double getClassProbability( int classValueIndex )
 	{
-		return 0;
+		return this.classAttribute.getClassValueProbability( classValueIndex );
 	}
 
 	public double getClassProbability( String classValue )
 	{
-		return 0;
+		return getClassProbability( this.classAttribute.getClassMap().get( classValue ) );
 	}
 }

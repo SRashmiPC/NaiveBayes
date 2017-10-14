@@ -1,6 +1,8 @@
 package bayes.data.builders;
 
+import bayes.algorithms.MyNaiveBayes;
 import bayes.data.structures.ArrayFrequencyTable;
+import bayes.data.structures.Class;
 import bayes.data.structures.TablePool;
 
 /**
@@ -20,7 +22,7 @@ public class TestBuilder
 	private final String[] attributesValues = { "t", "f" };
 
 	private int[][] example;
-	private boolean[] prob = {};
+	private String[] prob;
 	private String answer;
 
 	private TablePool tablePool;
@@ -28,8 +30,13 @@ public class TestBuilder
 	public TestBuilder()
 	{
 		this.example = new int[][] { { 400, 350, 450, 500 }, { 0, 150, 300, 300 }, { 100, 150, 50, 200 }, { 500, 650, 800, 1000 } };
-		this.prob = new boolean[] { true, true, true };
+		this.prob = new String[] { "t", "t", "t" };
 		this.answer = "Banana";
+	}
+
+	public TablePool getTablePool()
+	{
+		return tablePool;
 	}
 
 	public void buid()
@@ -42,6 +49,11 @@ public class TestBuilder
 		longTable = new ArrayFrequencyTable( className, attributes[0], classValues, attributesValues );
 		sweetTable = new ArrayFrequencyTable( className, attributes[1], classValues, attributesValues );
 		yellowTable = new ArrayFrequencyTable( className, attributes[2], classValues, attributesValues );
+
+		//create class attribute object
+		double[] classFrequencies = new double[] { example[0][3], example[1][3], example[2][3] };
+		Class classAttribute = new Class( classValues.length );
+		classAttribute.init( classValues, classFrequencies );
 
 		//buildingLongTable
 		for ( int i = 0; i < classValues.length; i++ )
@@ -66,10 +78,19 @@ public class TestBuilder
 			yellowTable.setProbability( classValues[i], attributesValues[0], example[i][2] / total );
 			yellowTable.setProbability( classValues[i], attributesValues[1], ( total - example[i][2] ) / total );
 		}
-
+		tablePool = new TablePool( classAttribute, attributes );
 		longTable.printTable();
 		sweetTable.printTable();
 		yellowTable.printTable();
+		//add frequency Tables to the pool
+		tablePool.add( attributes[0], longTable );
+		tablePool.add( attributes[1], sweetTable );
+		tablePool.add( attributes[2], yellowTable );
+
+		//start posterior probabilities calculation
+		MyNaiveBayes myNaiveBayes = new MyNaiveBayes( this.tablePool );
+		myNaiveBayes.startCalculation( this.prob );
+		myNaiveBayes.printProbabilities();
 
 	}
 

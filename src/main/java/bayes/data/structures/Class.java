@@ -1,5 +1,6 @@
 package bayes.data.structures;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -18,9 +19,20 @@ public class Class
 		this.classCardinality = classCardinality;
 	}
 
-	public void init( double[] classValueFrequencies )
+	public void init( String[] classValues, double[] classValueFrequencies )
 	{
+
+		generateCLassValueMap( classValues );
 		generateClassValueProb( classValueFrequencies );
+	}
+
+	public void generateCLassValueMap( String[] classValues )
+	{
+		classMap = new HashMap<String, Integer>();
+		for ( int i = 0; i < classCardinality; i++ )
+		{
+			classMap.put( classValues[i], i );
+		}
 	}
 
 	public void generateClassValueProb( double[] classValueFrequencies )
@@ -33,7 +45,7 @@ public class Class
 
 		for ( int i = 0; i < classCardinality; i++ )
 		{
-			classValueFrequencies[i] += classValueFrequencies[i] / sum;
+			classValueFrequencies[i] = classValueFrequencies[i] / sum;
 		}
 
 		this.classValueProbabilities = classValueFrequencies;
@@ -77,5 +89,10 @@ public class Class
 	public void setClassValueProbabilities( double[] classValueProbabilities )
 	{
 		this.classValueProbabilities = classValueProbabilities;
+	}
+
+	public double getClassValueProbability( int index )
+	{
+		return this.classValueProbabilities[index];
 	}
 }

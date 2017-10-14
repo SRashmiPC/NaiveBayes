@@ -25,7 +25,7 @@ public class ArrayFrequencyTable extends BasicFrequencyTable
 
 	public void generateMap( String[] attributeValues )
 	{
-		attributeMap = new HashMap<String, Integer>(  );
+		attributeMap = new HashMap<String, Integer>();
 		int len = attributeValues.length;
 		for ( int i = 0; i < len; i++ )
 		{
@@ -76,6 +76,6 @@ public class ArrayFrequencyTable extends BasicFrequencyTable
 			}
 			System.out.println( "" );
 		}
-		System.out.println("");
+		System.out.println( "" );
 	}
 }

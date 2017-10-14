@@ -9,8 +9,8 @@ public class Driver
 {
 	public static void main( String[] args )
 	{
-//		WekaNaiveBayes wekaNaiveBayes = new WekaNaiveBayes( "E:\\SampleDataset\\ionosphere.arff", 34 );
-//		wekaNaiveBayes.startNaiveBayes();
+		//		WekaNaiveBayes wekaNaiveBayes = new WekaNaiveBayes( "E:\\SampleDataset\\ionosphere.arff", 34 );
+		//		wekaNaiveBayes.startNaiveBayes();
 
 		TestBuilder testBuilder = new TestBuilder();
 		testBuilder.buid();

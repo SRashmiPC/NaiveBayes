@@ -11,6 +11,11 @@ public class MyNaiveBayes
 	TablePool tablePool;
 	double[] posteriorProbabilities;
 
+	public MyNaiveBayes( TablePool tablePool )
+	{
+		this.tablePool = tablePool;
+	}
+
 	public void startCalculation( String[] attributeValues )
 	{
 		int classCardinality = BasicFrequencyTable.getClassCardinality();
@@ -43,5 +48,15 @@ public class MyNaiveBayes
 			}
 			posteriorProbabilities[i] = posteriorProbability;
 		}
+	}
+
+	public void printProbabilities()
+	{
+		System.out.println( "answers: " );
+		for ( double prob : posteriorProbabilities )
+		{
+			System.out.println( prob + " " );
+		}
+		System.out.println( "" );
 	}
 }
