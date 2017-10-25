@@ -18,7 +18,7 @@ public class MyNaiveBayes
 
 	public void startCalculation( String[] attributeValues )
 	{
-		int classCardinality = BasicFrequencyTable.getClassCardinality();
+		int classCardinality = this.tablePool.getClassCardinality();
 		this.posteriorProbabilities = new double[classCardinality];
 		int numberOfAttributes = tablePool.getNumberOfAttributes();
 		for ( int i = 0; i < classCardinality; i++ )
@@ -35,7 +35,7 @@ public class MyNaiveBayes
 
 	public void startCalculation( int[] attributeValueIndexes )
 	{
-		int classCardinality = BasicFrequencyTable.getClassCardinality();
+		int classCardinality = this.tablePool.getClassCardinality();
 		this.posteriorProbabilities = new double[classCardinality];
 		int numberOfAttributes = tablePool.getNumberOfAttributes();
 		for ( int i = 0; i < classCardinality; i++ )

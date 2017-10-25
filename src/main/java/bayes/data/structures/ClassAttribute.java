@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Created by Rashmi on 9/30/2017.
  */
-public class Class
+public class ClassAttribute
 {
 	private String className;
 	private int classCardinality;
@@ -14,14 +14,15 @@ public class Class
 	private double[] classValueProbabilities;
 	private boolean allocated = false;
 
-	public Class( int classCardinality )
+	public ClassAttribute( int classCardinality )
 	{
 		this.classCardinality = classCardinality;
 	}
 
+
+
 	public void init( String[] classValues, double[] classValueFrequencies )
 	{
-
 		generateCLassValueMap( classValues );
 		generateClassValueProb( classValueFrequencies );
 	}

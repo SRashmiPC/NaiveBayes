@@ -30,32 +30,40 @@ public class ProbGenerator
 	/**
 	 * initialize mean and sd
 	 */
-	public void init(){
-		if(useApacheCommonMath){
+	public void init()
+	{
+		if ( useApacheCommonMath )
+		{
 			initUsingApacheCommonMath();
-		}else {
+		}
+		else
+		{
 			initUsingBitSlices();
 		}
 	}
 
-	public void initUsingApacheCommonMath(){
-		Mean mean = new Mean(  );
+	public void initUsingApacheCommonMath()
+	{
+		Mean mean = new Mean();
 		this.mean = mean.evaluate( this.data, 0, this.data.length );
-		StandardDeviation standardDeviation = new StandardDeviation(  );
+		StandardDeviation standardDeviation = new StandardDeviation();
 		this.standardDeviation = standardDeviation.evaluate( this.data );
 		this.normalDistribution = new NormalDistribution( this.mean, this.standardDeviation );
 	}
 
-	public void initUsingBitSlices(){
+	public void initUsingBitSlices()
+	{
 
 	}
 
 	/**
 	 * calculate the probability of given val accoring to the distribution
+	 *
 	 * @param value value that seeking for probability
 	 * @return probabilty of given value
 	 */
-	public double getProbability(double value){
+	public double getProbability( double value )
+	{
 		return this.normalDistribution.cumulativeProbability( value );
 	}
 }

@@ -16,9 +16,9 @@ public class ArrayFrequencyTable extends BasicFrequencyTable
 	 */
 	private double[][] table;
 
-	public ArrayFrequencyTable( String className, String attributeName, String[] classValues, String[] attributeValues )
+	public ArrayFrequencyTable( ClassAttribute classAttribute, String[] classValues, String attributeName, String[] attributeValues )
 	{
-		super( className, attributeName, classValues, attributeValues.length );
+		super( classAttribute, attributeName, attributeValues.length );
 		generateMap( attributeValues );
 		table = new double[classValues.length][attributeValues.length];
 	}

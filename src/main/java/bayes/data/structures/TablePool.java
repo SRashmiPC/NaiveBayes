@@ -14,9 +14,9 @@ public class TablePool
 	private Map<String, BasicFrequencyTable> attributeMap;
 	private int numberOfAttributes;
 	private String[] attributeList;
-	private Class classAttribute;
+	private ClassAttribute classAttribute;
 
-	public TablePool( Class classAttribute, String... attributeList )
+	public TablePool( ClassAttribute classAttribute, String... attributeList )
 	{
 		this.classAttribute = classAttribute;
 		this.numberOfAttributes = attributeList.length;
@@ -87,5 +87,9 @@ public class TablePool
 	public double getClassProbability( String classValue )
 	{
 		return getClassProbability( this.classAttribute.getClassMap().get( classValue ) );
+	}
+
+	public int getClassCardinality(){
+		return this.classAttribute.getClassCardinality();
 	}
 }

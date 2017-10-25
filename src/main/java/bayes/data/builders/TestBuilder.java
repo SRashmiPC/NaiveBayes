@@ -2,7 +2,7 @@ package bayes.data.builders;
 
 import bayes.algorithms.MyNaiveBayes;
 import bayes.data.structures.ArrayFrequencyTable;
-import bayes.data.structures.Class;
+import bayes.data.structures.ClassAttribute;
 import bayes.data.structures.TablePool;
 
 /**
@@ -46,14 +46,14 @@ public class TestBuilder
 		ArrayFrequencyTable sweetTable;
 		ArrayFrequencyTable yellowTable;
 
-		longTable = new ArrayFrequencyTable( className, attributes[0], classValues, attributesValues );
-		sweetTable = new ArrayFrequencyTable( className, attributes[1], classValues, attributesValues );
-		yellowTable = new ArrayFrequencyTable( className, attributes[2], classValues, attributesValues );
-
 		//create class attribute object
 		double[] classFrequencies = new double[] { example[0][3], example[1][3], example[2][3] };
-		Class classAttribute = new Class( classValues.length );
+		ClassAttribute classAttribute = new ClassAttribute( classValues.length );
 		classAttribute.init( classValues, classFrequencies );
+
+		longTable = new ArrayFrequencyTable( classAttribute, classValues, attributes[0], attributesValues );
+		sweetTable = new ArrayFrequencyTable( classAttribute, classValues, attributes[1], attributesValues );
+		yellowTable = new ArrayFrequencyTable( classAttribute, classValues, attributes[2], attributesValues );
 
 		//buildingLongTable
 		for ( int i = 0; i < classValues.length; i++ )

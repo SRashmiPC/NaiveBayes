@@ -1,6 +1,5 @@
 package bayes.data.structures;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -8,57 +7,37 @@ import java.util.Map;
  */
 public abstract class BasicFrequencyTable
 {
-	private static String className;
-	private static int classCardinality;
-	private static Map<String, Integer> classMap;//maps classAttribute's values to indexes
-	private static int[] classValueFrequencies;
-	private static boolean allocated = false;
+	private ClassAttribute classAttribute;
+	private String className;
 
 	private String attributeName; //name of predictor attribute
 	private int attributeCardinality;
 
-	public BasicFrequencyTable( String className, String attributeName, String[] classValues, int attributeCardinality )
+	public BasicFrequencyTable( ClassAttribute classAttribute, String attributeName, int attributeCardinality )
 	{
-		if ( !allocated )
-		{
-			BasicFrequencyTable.className = className;
-			BasicFrequencyTable.classMap = new HashMap<String, Integer>();
-			BasicFrequencyTable.generateClassMap( classValues );
-			BasicFrequencyTable.classCardinality = classValues.length;
-			BasicFrequencyTable.classValueFrequencies = new int[classCardinality];
-			BasicFrequencyTable.allocated = true;
-		}
+		this.classAttribute = classAttribute;
+		this.attributeName = attributeName;
 		this.attributeCardinality = attributeCardinality;
 	}
 
-	public static void setClassName( String className )
+	public void setClassName( String className )
 	{
-		BasicFrequencyTable.className = className;
+		this.className = className;
 	}
 
-	public static void setClassCardinality( int classCardinality )
+	public void setClassCardinality( int classCardinality )
 	{
-		BasicFrequencyTable.classCardinality = classCardinality;
+		this.classAttribute.setClassCardinality( classCardinality );
 	}
 
-	public static Map<String, Integer> getClassMap()
+	public Map<String, Integer> getClassMap()
 	{
-		return classMap;
+		return this.classAttribute.getClassMap();
 	}
 
-	public static void setClassMap( Map<String, Integer> classMap )
+	public void setClassMap( Map<String, Integer> classMap )
 	{
-		BasicFrequencyTable.classMap = classMap;
-	}
-
-	public static int[] getClassValueFrequencies()
-	{
-		return classValueFrequencies;
-	}
-
-	public static void setClassValueFrequencies( int[] classValueFrequencies )
-	{
-		BasicFrequencyTable.classValueFrequencies = classValueFrequencies;
+		this.classAttribute.setClassMap( classMap );
 	}
 
 	public void setAttributeName( String attributeName )
@@ -71,67 +50,29 @@ public abstract class BasicFrequencyTable
 		this.attributeCardinality = attributeCardinality;
 	}
 
-	public static String getClassName()
+	public String getClassName()
 	{
-		return BasicFrequencyTable.className;
+		return this.className;
 	}
 
 	public String getAttributeName()
 	{
-		return attributeName;
+		return this.attributeName;
 	}
 
-	public static int getClassCardinality()
+	public int getClassCardinality()
 	{
-		return BasicFrequencyTable.classCardinality;
+		return this.classAttribute.getClassCardinality();
 	}
 
 	public int getAttributeCardinality()
 	{
-		return attributeCardinality;
-	}
-
-	public static void generateClassMap( String[] classValues )
-	{
-		int len = classValues.length;
-		for ( int i = 0; i < len; i++ )
-		{
-
-			classMap.put( classValues[i], i );
-		}
-	}
-
-	public static void populateClassValueFrequencies( String[] values, int[] frequencies )
-	{
-		int len = values.length;
-		for ( int i = 0; i < len; i++ )
-		{
-			populateClassValueFrequencies( classMap.get( values[i] ), frequencies[i] );
-		}
-	}
-
-	public static void populateClassValueFrequencies( int[] indexes, int[] frequencies )
-	{
-		int len = indexes.length;
-		for ( int i = 0; i < len; i++ )
-		{
-			populateClassValueFrequencies( indexes[i], frequencies[i] );
-		}
-	}
-
-	public static void populateClassValueFrequencies( String value, int frequency )
-	{
-		populateClassValueFrequencies( classMap.get( value ), frequency );
-	}
-
-	public static void populateClassValueFrequencies( int index, int frequency )
-	{
-		classValueFrequencies[index] = frequency;
+		return this.attributeCardinality;
 	}
 
 	public int getClassIndex( String value )
 	{
-		return ( int ) BasicFrequencyTable.classMap.get( value );
+		return ( int ) this.classAttribute.getClassMap().get( value );
 	}
 
 	abstract int getAttributeIndex( String value );

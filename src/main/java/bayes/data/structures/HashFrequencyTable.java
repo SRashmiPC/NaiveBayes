@@ -5,9 +5,9 @@ package bayes.data.structures;
  */
 public class HashFrequencyTable extends BasicFrequencyTable
 {
-	public HashFrequencyTable( String className, String attributeName, String[] classValues, int attributeCardinality )
+	public HashFrequencyTable( ClassAttribute classAttribute, String attributeName, String[] classValues, int attributeCardinality )
 	{
-		super( className, attributeName, classValues, attributeCardinality );
+		super( classAttribute, attributeName, attributeCardinality );
 	}
 
 	int getAttributeIndex( String value )
