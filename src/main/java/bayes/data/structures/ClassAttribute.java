@@ -19,9 +19,13 @@ public class ClassAttribute
 		this.classCardinality = classCardinality;
 	}
 
-
-
 	public void init( String[] classValues, double[] classValueFrequencies )
+	{
+		generateCLassValueMap( classValues );
+		generateClassValueProb( classValueFrequencies );
+	}
+
+	public void init( String[] classValues, int[] classValueFrequencies )
 	{
 		generateCLassValueMap( classValues );
 		generateClassValueProb( classValueFrequencies );
@@ -50,6 +54,22 @@ public class ClassAttribute
 		}
 
 		this.classValueProbabilities = classValueFrequencies;
+	}
+
+	public void generateClassValueProb( int[] classValueFrequencies )
+	{
+		int sum = 0;
+		for ( int i = 0; i < classCardinality; i++ )
+		{
+			sum += classValueFrequencies[i];
+		}
+
+		this.classValueProbabilities = new double[classValueFrequencies.length];
+
+		for ( int i = 0; i < classCardinality; i++ )
+		{
+			this.classValueProbabilities[i] = classValueFrequencies[i] / sum;
+		}
 	}
 
 	public String getClassName()

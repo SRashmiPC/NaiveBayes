@@ -89,7 +89,8 @@ public class TablePool
 		return getClassProbability( this.classAttribute.getClassMap().get( classValue ) );
 	}
 
-	public int getClassCardinality(){
+	public int getClassCardinality()
+	{
 		return this.classAttribute.getClassCardinality();
 	}
 }

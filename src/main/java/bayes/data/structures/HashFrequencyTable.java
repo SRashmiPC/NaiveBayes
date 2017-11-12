@@ -10,7 +10,7 @@ public class HashFrequencyTable extends BasicFrequencyTable
 		super( classAttribute, attributeName, attributeCardinality );
 	}
 
-	int getAttributeIndex( String value )
+	public int getAttributeIndex( String value )
 	{
 		return 0;
 	}
