@@ -5,6 +5,7 @@ import bayes.data.connector.sql.SQLConn;
 import bayes.data.connector.sql.SQLDataService;
 import bayes.data.structures.ArrayFrequencyTable;
 import bayes.data.structures.ClassAttribute;
+import bayes.data.structures.NumericalTable;
 import bayes.data.structures.TablePool;
 
 import java.sql.Connection;
@@ -47,7 +48,7 @@ public class EPMSQLBuilder
 			//create dataservice
 			DataService dataService = new SQLDataService();
 
-			//fetching data
+			//**********************************fetching data start *********************************************
 			int classCardinality = dataService.getAttributeCardinality( classAttributeName, table, connection );
 			String[] classValues = dataService.getDistinctValues( classAttributeName, table, connection );
 			int[] classValueFrequencies = new int[classCardinality];
@@ -57,51 +58,38 @@ public class EPMSQLBuilder
 				classValueFrequencies[i] = dataService.getAttributeValueCount( classValues[i], classAttributeName, table, connection );
 			}
 
-			//For catogorical Feilds
+			//For catogarical Fields
 			//get other attributes cardinality;
 			int studentCardinality = dataService.getAttributeCardinality( studentIdAttribute, table, connection );
 			int exerciseCardinality = dataService.getAttributeCardinality( exerciseAttribute, table, connection );
 			int activityCardinality = dataService.getAttributeCardinality( activityAttribute, table, connection );
 
-			//get othe data distinct value list
+			//get other data distinct value list
 			String[] studentIds = dataService.getDistinctValues( studentIdAttribute, table, connection );
 			String[] exercises = dataService.getDistinctValues( exerciseAttribute, table, connection );
 			String[] activities = dataService.getDistinctValues( activityAttribute, table, connection );
 
-			ArrayList<String[]> distinctLists = new ArrayList<String[]>();
-			distinctLists.add( studentIds );
-			distinctLists.add( exercises );
-			distinctLists.add( activities );
-
-			//fetch union frequenciesn
-			int numberOfLists = distinctLists.size();
-			for ( int i = 0; i < numberOfLists; i++ )
-			{
-				String[] distinctList = distinctLists.get( i );
-			}
-			//int studentunion = dataService.getTwoAttributesUnionCount(  )
-
 			//For numerical feilds
 			//keep list of integer arrays for each numeric fiesld
-			ArrayList<int[]> timeIntegerLists = new ArrayList<int[]>( classCardinality );
-			ArrayList<int[]> wheelIntegerLists = new ArrayList<int[]>( classCardinality );
-			ArrayList<int[]> wheelClickIntegerLists = new ArrayList<int[]>( classCardinality );
-			ArrayList<int[]> leftIntegerLists = new ArrayList<int[]>( classCardinality );
-			ArrayList<int[]> rightIntegerLists = new ArrayList<int[]>( classCardinality );
-			ArrayList<int[]> movementIntegerLists = new ArrayList<int[]>( classCardinality );
-			ArrayList<int[]> keysIntegerLists = new ArrayList<int[]>( classCardinality );
+			ArrayList<double[]> timeIntegerLists = new ArrayList<double[]>( classCardinality );
+			ArrayList<double[]> wheelIntegerLists = new ArrayList<double[]>( classCardinality );
+			ArrayList<double[]> wheelClickIntegerLists = new ArrayList<double[]>( classCardinality );
+			ArrayList<double[]> leftIntegerLists = new ArrayList<double[]>( classCardinality );
+			ArrayList<double[]> rightIntegerLists = new ArrayList<double[]>( classCardinality );
+			ArrayList<double[]> movementIntegerLists = new ArrayList<double[]>( classCardinality );
+			ArrayList<double[]> keysIntegerLists = new ArrayList<double[]>( classCardinality );
 
 			//now fetch alll numerical fields
 			//we fetch all numerical feild value count fro each class attribute values;
 			for ( int i = 0; i < classCardinality; i++ )
 			{
-				int[] timeValues = dataService.getIntegerValuesForClassValuesArray( timeAttribute, classValues[i], classAttributeName, classValueFrequencies[i], table, connection );
-				int[] wheelValues = dataService.getIntegerValuesForClassValuesArray( wheelAttribute, classValues[i], classAttributeName, classValueFrequencies[i], table, connection );
-				int[] wheelClickValues = dataService.getIntegerValuesForClassValuesArray( wheelClickAttribute, classValues[i], classAttributeName, classValueFrequencies[i], table, connection );
-				int[] leftValues = dataService.getIntegerValuesForClassValuesArray( leftAttribute, classValues[i], classAttributeName, classValueFrequencies[i], table, connection );
-				int[] rightValues = dataService.getIntegerValuesForClassValuesArray( rightAttribute, classValues[i], classAttributeName, classValueFrequencies[i], table, connection );
-				int[] movementValues = dataService.getIntegerValuesForClassValuesArray( movementAttribute, classValues[i], classAttributeName, classValueFrequencies[i], table, connection );
-				int[] keysValues = dataService.getIntegerValuesForClassValuesArray( keysAttribute, classValues[i], classAttributeName, classValueFrequencies[i], table, connection );
+				double[] timeValues = dataService.getIntegerValuesForClassValuesArray( timeAttribute, classValues[i], classAttributeName, classValueFrequencies[i], table, connection );
+				double[] wheelValues = dataService.getIntegerValuesForClassValuesArray( wheelAttribute, classValues[i], classAttributeName, classValueFrequencies[i], table, connection );
+				double[] wheelClickValues = dataService.getIntegerValuesForClassValuesArray( wheelClickAttribute, classValues[i], classAttributeName, classValueFrequencies[i], table, connection );
+				double[] leftValues = dataService.getIntegerValuesForClassValuesArray( leftAttribute, classValues[i], classAttributeName, classValueFrequencies[i], table, connection );
+				double[] rightValues = dataService.getIntegerValuesForClassValuesArray( rightAttribute, classValues[i], classAttributeName, classValueFrequencies[i], table, connection );
+				double[] movementValues = dataService.getIntegerValuesForClassValuesArray( movementAttribute, classValues[i], classAttributeName, classValueFrequencies[i], table, connection );
+				double[] keysValues = dataService.getIntegerValuesForClassValuesArray( keysAttribute, classValues[i], classAttributeName, classValueFrequencies[i], table, connection );
 
 				// add each integer array to relevent list
 				timeIntegerLists.add( timeValues );
@@ -113,7 +101,10 @@ public class EPMSQLBuilder
 				keysIntegerLists.add( keysValues );
 			}
 
-			//creating frequency tables
+			//**********************************fetching data end *********************************************
+
+			//**********************************create data structuresstart *********************************************
+
 			//create class Attribute
 			ClassAttribute classAttribute = new ClassAttribute( classValues.length );
 			classAttribute.init( classValues, classValueFrequencies );
@@ -133,20 +124,35 @@ public class EPMSQLBuilder
 					studentTable.setProbability( classValues[i], studentIds[j], probability );
 				}
 
-				for ( int j = 0; j < studentCardinality; j++ )
+				for ( int j = 0; j < exerciseCardinality; j++ )
 				{
 					double probability = dataService.getTwoAttributesUnionCount( exercises[j], exerciseAttribute, classValues[i], classAttributeName, table, connection );
 					probability /= classValueFrequencies[i];
-					studentTable.setProbability( classValues[i], studentIds[j], probability );
+					exerciseTable.setProbability( classValues[i], studentIds[j], probability );
 				}
 
-				for ( int j = 0; j < studentCardinality; j++ )
+				for ( int j = 0; j < activityCardinality; j++ )
 				{
 					double probability = dataService.getTwoAttributesUnionCount( activities[j], activityAttribute, classValues[i], classAttributeName, table, connection );
 					probability /= classValueFrequencies[i];
-					studentTable.setProbability( classValues[i], studentIds[j], probability );
+					activityTable.setProbability( classValues[i], studentIds[j], probability );
 				}
 			}
+
+			//create data structure for numerical fields
+			//for numerical fields we create special data structure called Numerical Table
+			//crete Numerical Table for Each Attribute
+			//(  classAttribute,  attributeName,  attributeValueList,  useApaceCommanMath )
+			NumericalTable timeNumericalTable = new NumericalTable( classAttribute, timeAttribute, timeIntegerLists, true  );
+			NumericalTable wheelNumericalTable = new NumericalTable( classAttribute, wheelAttribute, wheelIntegerLists, true  );
+			NumericalTable wheelClickNumericalTable = new NumericalTable( classAttribute, wheelClickAttribute, wheelClickIntegerLists, true  );
+			NumericalTable leftNumericalTable = new NumericalTable( classAttribute, leftAttribute, leftIntegerLists, true  );
+			NumericalTable rightNumericalTable = new NumericalTable( classAttribute, rightAttribute, rightIntegerLists, true  );
+			NumericalTable moveentNumericalTable = new NumericalTable( classAttribute, movementAttribute, movementIntegerLists, true  );
+			NumericalTable keysNumericalTable = new NumericalTable( classAttribute, keysAttribute, keysIntegerLists, true  );
+					
+
+			//**********************************create data structuresstart *********************************************
 
 		}
 		finally

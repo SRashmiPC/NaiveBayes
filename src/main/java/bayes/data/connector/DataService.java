@@ -28,6 +28,6 @@ public abstract class DataService
 
 	public abstract ArrayList<Integer> getIntegerValuesForClassValue( String attribute, String classValue, String classAttribute, String table, Connection connection );
 
-	public abstract int[] getIntegerValuesForClassValuesArray( String attribute, String classValue, String classAttribute, int count, String table, Connection connection );
+	public abstract double[] getIntegerValuesForClassValuesArray( String attribute, String classValue, String classAttribute, int count, String table, Connection connection );
 
 }

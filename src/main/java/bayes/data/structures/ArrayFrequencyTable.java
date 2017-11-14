@@ -33,7 +33,7 @@ public class ArrayFrequencyTable extends BasicFrequencyTable
 		}
 	}
 
-	int getAttributeIndex( String value )
+	public int getAttributeIndex( String value )
 	{
 		return ( int ) attributeMap.get( value );
 	}
@@ -43,17 +43,17 @@ public class ArrayFrequencyTable extends BasicFrequencyTable
 		return table[getClassIndex( classValue )][attributeMap.get( attributeValue )];
 	}
 
-	double getProbabilty( int attributeIndex, String classValue )
+	public double getProbabilty( int attributeIndex, String classValue )
 	{
 		return table[getClassIndex( classValue )][attributeIndex];
 	}
 
-	double getProbabilty( String attributeValue, int classIndex )
+	public double getProbabilty( String attributeValue, int classIndex )
 	{
 		return table[classIndex][getAttributeIndex( attributeValue )];
 	}
 
-	double getProbabilty( int attributeIndex, int classIndex )
+	public double getProbabilty( int attributeIndex, int classIndex )
 	{
 		return table[classIndex][classIndex];
 	}

@@ -342,9 +342,19 @@ public class SQLDataService extends DataService
 		return arrayList;
 	}
 
-	public int[] getIntegerValuesForClassValuesArray( String attribute, String classValue, String classAttribute, int count, String table, Connection connection )
+	/**
+	 * Remember this only sends integer values, Not doubles
+	 * @param attribute
+	 * @param classValue
+	 * @param classAttribute
+	 * @param count
+	 * @param table
+	 * @param connection
+	 * @return
+	 */
+	public double[] getIntegerValuesForClassValuesArray( String attribute, String classValue, String classAttribute, int count, String table, Connection connection )
 	{
-		int[] arrayList = new int[count];
+		double[] arrayList = new double[count];
 		if ( connection == null )
 		{
 			//return getIntegerValuesForClassValue( attribute, classValue, classAttribute, table );

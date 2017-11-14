@@ -75,14 +75,14 @@ public abstract class BasicFrequencyTable
 		return ( int ) this.classAttribute.getClassMap().get( value );
 	}
 
-	abstract int getAttributeIndex( String value );
+	public abstract int getAttributeIndex( String value );
 
-	abstract double getProbabilty( String attributeValue, String classValue );
+	public abstract double getProbabilty( String attributeValue, String classValue );
 
-	abstract double getProbabilty( int attributeIndex, String classValue );
+	public abstract double getProbabilty( int attributeIndex, String classValue );
 
-	abstract double getProbabilty( String attributeValue, int classIndex );
+	public abstract double getProbabilty( String attributeValue, int classIndex );
 
-	abstract double getProbabilty( int attributeIndex, int classIndex );
+	public abstract double getProbabilty( int attributeIndex, int classIndex );
 
 }
