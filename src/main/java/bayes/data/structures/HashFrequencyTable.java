@@ -20,17 +20,17 @@ public class HashFrequencyTable extends BasicFrequencyTable
 		return 0;
 	}
 
-	double getProbabilty( int attributeIndex, String classValue )
+	public double getProbabilty( int attributeIndex, String classValue )
 	{
 		return 0;
 	}
 
-	double getProbabilty( String attributeValue, int classIndex )
+	public double getProbabilty( String attributeValue, int classIndex )
 	{
 		return 0;
 	}
 
-	double getProbabilty( int attributeIndex, int classIndex )
+	public double getProbabilty( int attributeIndex, int classIndex )
 	{
 		return 0;
 	}

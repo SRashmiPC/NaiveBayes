@@ -101,6 +101,7 @@ public class EPMSQLBuilder
 				keysIntegerLists.add( keysValues );
 			}
 
+			System.out.println("All Data Fetched");
 			//**********************************fetching data end *********************************************
 
 			//**********************************create data structuresstart *********************************************
@@ -128,14 +129,14 @@ public class EPMSQLBuilder
 				{
 					double probability = dataService.getTwoAttributesUnionCount( exercises[j], exerciseAttribute, classValues[i], classAttributeName, table, connection );
 					probability /= classValueFrequencies[i];
-					exerciseTable.setProbability( classValues[i], studentIds[j], probability );
+					exerciseTable.setProbability( classValues[i], exercises[j], probability );
 				}
 
 				for ( int j = 0; j < activityCardinality; j++ )
 				{
 					double probability = dataService.getTwoAttributesUnionCount( activities[j], activityAttribute, classValues[i], classAttributeName, table, connection );
 					probability /= classValueFrequencies[i];
-					activityTable.setProbability( classValues[i], studentIds[j], probability );
+					activityTable.setProbability( classValues[i], activities[j], probability );
 				}
 			}
 
@@ -150,7 +151,7 @@ public class EPMSQLBuilder
 			NumericalTable rightNumericalTable = new NumericalTable( classAttribute, rightAttribute, rightIntegerLists, true  );
 			NumericalTable moveentNumericalTable = new NumericalTable( classAttribute, movementAttribute, movementIntegerLists, true  );
 			NumericalTable keysNumericalTable = new NumericalTable( classAttribute, keysAttribute, keysIntegerLists, true  );
-					
+
 
 			//**********************************create data structuresstart *********************************************
 

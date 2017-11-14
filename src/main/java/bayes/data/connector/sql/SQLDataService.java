@@ -30,6 +30,9 @@ public class SQLDataService extends DataService
 			String query = "SELECT COUNT(DISTINCT " + attribute + " ) FROM " + table;
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery( query );
+			if( resultSet.first()){
+				return resultSet.getInt( 1 );
+			}
 		}
 		catch ( SQLException e )
 		{
@@ -56,7 +59,7 @@ public class SQLDataService extends DataService
 		try
 		{
 			connection = this.sqlConn.getConnection();
-			String query = "SELECT COUNT( " + attribute + " ) FROM " + table + " WHERE " + attribute + " = " + value;
+			String query = "SELECT COUNT( " + attribute + " ) FROM " + table + " WHERE " + attribute + " = '" + value+"'";
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery( query );
 
@@ -90,7 +93,7 @@ public class SQLDataService extends DataService
 		try
 		{
 			connection = this.sqlConn.getConnection();
-			String query = "SELECT COUNT( " + attributeOne + " ) FROM " + table + " WHERE " + attributeOne + " = " + valueOne + " and " + attributeTwo + " = " + valueTwo;
+			String query = "SELECT COUNT( " + attributeOne + " ) FROM " + table + " WHERE " + attributeOne + " = '" + valueOne + "' AND " + attributeTwo + " = '" + valueTwo +"'";
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery( query );
 
@@ -126,9 +129,12 @@ public class SQLDataService extends DataService
 		}
 		try
 		{
-			String query = "SELECT COUNT(DISTINCT " + attribute + " ) FROM " + table;
+			String query = "SELECT COUNT( DISTINCT " + attribute + " ) FROM " + table;
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery( query );
+			if( resultSet.first()){
+				return resultSet.getInt( 1 );
+			}
 		}
 		catch ( SQLException e )
 		{
@@ -146,7 +152,7 @@ public class SQLDataService extends DataService
 		}
 		try
 		{
-			String query = "SELECT COUNT( " + attribute + " ) FROM " + table + " WHERE " + attribute + " = " + value;
+			String query = "SELECT COUNT( " + attribute + " ) FROM " + table + " WHERE " + attribute + " = '" + value+"'";
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery( query );
 
@@ -158,17 +164,6 @@ public class SQLDataService extends DataService
 		catch ( SQLException e )
 		{
 			e.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
-				connection.close();
-			}
-			catch ( SQLException e )
-			{
-				e.printStackTrace();
-			}
 		}
 		return count;
 	}
@@ -182,7 +177,7 @@ public class SQLDataService extends DataService
 		}
 		try
 		{
-			String query = "SELECT COUNT( " + attributeOne + " ) FROM " + table + " WHERE " + attributeOne + " = " + valueOne + " and " + attributeTwo + " = " + valueTwo;
+			String query = "SELECT COUNT( " + attributeOne + " ) FROM " + table + " WHERE " + attributeOne + " = '" + valueOne + "' AND " + attributeTwo + " = '" + valueTwo +"'";
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery( query );
 
@@ -194,17 +189,6 @@ public class SQLDataService extends DataService
 		catch ( SQLException e )
 		{
 			e.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
-				connection.close();
-			}
-			catch ( SQLException e )
-			{
-				e.printStackTrace();
-			}
 		}
 		return count;
 	}
@@ -226,6 +210,7 @@ public class SQLDataService extends DataService
 			}
 			string = string.substring( 0, string.length() - 1 );
 			distinctValues = string.split( "," );
+			return distinctValues;
 		}
 		catch ( SQLException e )
 		{
@@ -264,21 +249,11 @@ public class SQLDataService extends DataService
 			}
 			string = string.substring( 0, string.length() - 1 );
 			distinctValues = string.split( "," );
+			return distinctValues;
 		}
 		catch ( SQLException e )
 		{
 			e.printStackTrace();
-		}
-		finally
-		{
-			try
-			{
-				connection.close();
-			}
-			catch ( SQLException e )
-			{
-				e.printStackTrace();
-			}
 		}
 		return distinctValues;
 	}
@@ -291,7 +266,7 @@ public class SQLDataService extends DataService
 		{
 			connection = this.sqlConn.getConnection();
 			Statement statement = connection.createStatement();
-			String query = "SELECT " + attribute + " FROM " + table + " WHERE " + classAttribute + "=" + classValue;
+			String query = "SELECT " + attribute + " FROM " + table + " WHERE " + classAttribute + "= '" + classValue+",'";
 			ResultSet resultSet = statement.executeQuery( query );
 			while ( resultSet.next() )
 			{
@@ -327,7 +302,7 @@ public class SQLDataService extends DataService
 		try
 		{
 			Statement statement = connection.createStatement();
-			String query = "SELECT " + attribute + " FROM " + table + " WHERE " + classAttribute + "=" + classValue;
+			String query = "SELECT " + attribute + " FROM " + table + " WHERE " + classAttribute + "= '" + classValue+"'";
 			ResultSet resultSet = statement.executeQuery( query );
 			while ( resultSet.next() )
 			{
@@ -363,7 +338,7 @@ public class SQLDataService extends DataService
 		{
 
 			Statement statement = connection.createStatement();
-			String query = "SELECT " + attribute + " FROM " + table + " WHERE " + classAttribute + "=" + classValue;
+			String query = "SELECT " + attribute + " FROM " + table + " WHERE " + classAttribute + "= '" + classValue+"'";
 			ResultSet resultSet = statement.executeQuery( query );
 
 			int index = 0;

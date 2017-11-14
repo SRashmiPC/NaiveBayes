@@ -1,5 +1,6 @@
 package bayes.algorithms;
 
+import bayes.data.builders.EPMSQLBuilder;
 import bayes.data.builders.TestBuilder;
 
 /**
@@ -12,8 +13,11 @@ public class Driver
 		//		WekaNaiveBayes wekaNaiveBayes = new WekaNaiveBayes( "E:\\SampleDataset\\ionosphere.arff", 34 );
 		//		wekaNaiveBayes.startNaiveBayes();
 
-		TestBuilder testBuilder = new TestBuilder();
-		testBuilder.buid();
+//		TestBuilder testBuilder = new TestBuilder();
+//		testBuilder.buid();
+
+		EPMSQLBuilder epmsqlBuilder = new EPMSQLBuilder();
+		epmsqlBuilder.build();
 
 	}
 }
